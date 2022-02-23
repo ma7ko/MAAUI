@@ -152,18 +152,6 @@ section{
       align-self: end;
   }
 
-  .custom-menu {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    background-color: #fff;
-  }
-
-  #main-nav {
-      background-color: #fff;
-  }
-
   .card7 {
     background-color: #fff;
     grid-row: 2/3;
@@ -205,13 +193,6 @@ section{
     font-size: 30px;
 }
 
-.footer {
-    background: rgb(40, 40, 40);
-    color: #eee;
-    height: 100vh;
-    position: relative;
-}
-
 #present {
     padding-bottom: 0px;
 }
@@ -220,10 +201,18 @@ section{
     margin-top: 10px;
 }
 
+.padding-top-50 {
+    padding-top: 50px;
+}
+
 .w-100 {
     width:100%;
 }
 
 .d-flex {
     display: flex;
+}
+
+#main-container {
+    padding-top: 50px;
 }

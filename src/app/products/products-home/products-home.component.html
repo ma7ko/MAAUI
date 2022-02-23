@@ -1,0 +1,636 @@
+<div class="padding-top-50">
+    <div class="row products">
+        <div class="{{ this.searchActive ? 'col-4' : 'col-1'}}" style="transition: width 1s;"></div>
+        <div class="{{ this.searchActive ? 'col-4' : 'col-1' }} filters p-0 pos-fix h-100 overflow-hidden" style="transition: width 1s;">
+            <div [ngClass]='{"bg-rem" : !this.searchActive}' class="tag-search">
+                <h5 class="d-inline-block ml25 s-txt"></h5>
+                <i class="icon-s inverted circular search link icon m-0"></i>
+            </div>
+            <div id="search-tabs" class="ui vertical icon menu float-right">
+                <a class="item" (click)="this.toggleSearchComponent($event)"><i style="transition: transform 2s;" class="arrow circle left icon rot-arr"></i></a>
+                <a class="item" (click)="setActiveTab(0)">
+                    <svg viewBox="325.123 59.383 185.556 186.473" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:bx="https://boxy-svg.com">
+                        <path
+                            d="M 378.43 192.926 H 490.675 L 490.675 173.426 L 530.675 202.926 L 490.675 232.426 L 490.675 212.926 H 378.43 V 192.926 Z"
+                            style="stroke: rgb(0, 0, 0);"
+                            transform="matrix(0.809026, -0.587772, 0.587772, 0.809026, -58.82642, 267.807281)"
+                            bx:shape="arrow 378.43 173.426 152.245 59 20 40 0 1@dff2da21" />
+                        <path
+                            d="M 358.531 205.175 H 457.96 L 457.96 189.675 L 497.96 215.175 L 457.96 240.675 L 457.96 225.175 H 358.531 V 205.175 Z"
+                            style="stroke: rgb(0, 0, 0);"
+                            bx:shape="arrow 358.531 189.675 139.429 51 20 40 0 1@1ca5c3ba" />
+                        <path
+                            d="M 362.69 209.378 H 464.57 L 464.57 193.878 L 504.57 219.378 L 464.57 244.878 L 464.57 229.378 H 362.69 V 209.378 Z"
+                            style="stroke: rgb(0, 0, 0);"
+                            transform="matrix(-0.000318, -1, 1, -0.000318, 149.154663, 587.820862)"
+                            bx:shape="arrow 362.69 193.878 141.88 51 20 40 0 1@cfc28990" />
+                    </svg>
+                </a>
+                <a (click)="setActiveTab(1)" class="item">
+                    <i class="text height icon"></i>
+                </a>
+                <a (click)="setActiveTab(2)" class="item">
+                    <svg viewBox="325.123 59.383 185.556 186.473" xmlns="http://www.w3.org/2000/svg"
+                        xmlns:bx="https://boxy-svg.com">
+                        <rect x="325.123" y="59.383" width="185" height="185"
+                            style="fill: rgb(40, 40, 40); stroke: rgb(40, 40, 40);" rx="33.529" ry="33.529" />
+                        <ellipse style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);" cx="450.679" cy="185.856"
+                            rx="50" ry="50" />
+                        <path
+                            d="M 374.203 78.493 Q 385.123 59.383 396.043 78.493 L 434.203 145.273 Q 445.123 164.383 423.283 164.383 L 346.963 164.383 Q 325.123 164.383 336.043 145.273 Z"
+                            style="fill: rgb(255, 255, 255); stroke: rgb(255, 255, 255);"
+                            bx:shape="triangle 325.123 59.383 120 105 0.5 0.182 1@48d412c9" />
+                    </svg>
+                </a>
+                <a (click)="setActiveTab(3)" class="item">
+                    <i class="dollar sign icon"></i>
+                </a>
+            </div>
+            <div *ngIf="this.activeTab == 0 && this.searchActive" class="dimension-search p-5-p overflow-hidden">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="dim-title align-self-center ml25 text-nowrap">Dimensions</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table-dim w-75 m25">
+                            <thead>
+                                <th class="hidden-text-search text-center w-50">Unit</th>
+                                <th class="hidden-text-search text-center w-50">From</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><label class="search-text">Width</label></td>
+                                    <td class="text-center">
+                                        <div class="ui small right labeled input">
+                                            <input (change)="this.widthChanged($event.target.value)" class="w-75"
+                                                name="width" type="text" placeholder="Enter width...">
+                                            <div class="ui basic label">
+                                                <span *ngIf="this.activeUnit == 'mm'">mm</span>
+                                                <span *ngIf="this.activeUnit == 'in'">in</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label class="search-text">Height</label></td>
+                                    <td class="text-center">
+                                        <div class="ui small right labeled input">
+                                            <input class="w-75" (change)="this.heightChanged($event.target.value)"
+                                                name="height" type="text" placeholder="Enter height...">
+                                            <div class="ui basic label">
+                                                <span *ngIf="this.activeUnit == 'mm'">mm</span>
+                                                <span *ngIf="this.activeUnit == 'in'">in</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label class="search-text">Depth</label></td>
+                                    <td class="text-center">
+                                        <div class="ui small right labeled input">
+                                            <input (change)="this.depthChanged($event.target.value)" class="w-75"
+                                                name="depth" type="text" placeholder="Enter depth...">
+                                            <div class="ui basic label">
+                                                <span *ngIf="this.activeUnit == 'mm'">mm</span>
+                                                <span *ngIf="this.activeUnit == 'in'">in</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label class="search-text">Unit</label></td>
+                                    <td class="text-center">
+                                        <div>
+                                            <div class="ui small buttons">
+                                                <div (click)="this.selectRadio2($event)"
+                                                    class="ui button mm-i active-checked"><input class="hidden"
+                                                        value="mm" type="radio" name="unit-metric" selected /><span
+                                                        style="pointer-events: none;" class="fs-1rem">Millimeters</span>
+                                                </div>
+                                                <div class="or fs-1rem"></div>
+                                                <div (click)="this.selectRadio2($event)" class="ui button mm-i"><input
+                                                        class="hidden" value="in" type="radio"
+                                                        name="unit-metric" /><span style="pointer-events: none;"
+                                                        class="fs-1rem">Inches</span></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div [ngClass]="{'hidden' : !this.searchActive, 'shown' : this.searchActive}" *ngIf="this.activeTab == 1" class="text-search p-5-p overflow-hidden">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="dim-title align-self-center ml25 text-nowrap">Text Phrase</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table-dim w-75 m25">
+                            <thead>
+                                <th class="hidden-text-search text-center w-50">Unit</th>
+                                <th class="hidden-text-search text-center w-50">From</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><label class="search-text">Text</label></td>
+                                    <td class="text-center"><div class="ui input">
+                                        <input type="text" placeholder="Search...">
+                                      </div></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="search-text text-nowrap">Search level</label></td>
+                                    <td><div class="row">
+                                        <div class="col-12">
+                                            <div class="ui buttons m25">
+                                                <div (click)="this.selectRadio4($event)" class="ui button tx-s mw-100"><input class="hidden"
+                                                        value="word" type="radio" name="txt-s"/><span
+                                                        style="pointer-events: none;" class="fs-1rem">word</span></div>
+                                                <div (click)="this.selectRadio4($event)" class="ui button tx-s mw-100 active-checked"><input class="hidden"
+                                                        value="character" type="radio" name="txt-s" selected/><span style="pointer-events: none;"
+                                                        class="fs-1rem">character</span></div>
+                                            </div>
+                                        </div>
+                                    </div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="this.activeTab == 2 && this.searchActive" class="text-search p-5-p overflow-hidden">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="dim-title align-self-center ml25 text-nowrap">Shape & Color</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div id="sh-container" class="ui small buttons m25">
+                            <div (click)="this.selectRadio3($event)" class="ui button sh-i mw-100"><input class="hidden"
+                                    value="square" type="radio" name="shape" selected /><span
+                                    style="pointer-events: none;" class="fs-1rem"><svg class="w-100"
+                                        viewBox="325.123 59.383 185.556 186.473" xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="357.901" y="92.62" width="120" height="120"
+                                            style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);" rx="33.529"
+                                            ry="33.529" />
+                                    </svg></span></div>
+                            <div (click)="this.selectRadio3($event)" class="ui button sh-i mw-100"><input class="hidden"
+                                    value="circle" type="radio" name="shape" selected /><span
+                                    style="pointer-events: none;"><svg class="w-100"
+                                        viewBox="325.123 59.383 185.556 186.473" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:bx="https://boxy-svg.com" style="pointer-events: none;">
+                                        <path
+                                            d="M 405.473 108.631 Q 417.901 86.607 430.328 108.631 L 473.758 185.595 Q 486.186 207.619 461.33 207.619 L 374.471 207.619 Q 349.615 207.619 362.043 185.595 Z"
+                                            style="stroke: rgb(80, 80, 80); fill: rgb(80, 80, 80); pointer-events: none;"
+                                            bx:shape="triangle 349.615 86.607 136.571 121.012 0.5 0.182 1@a9396642" />
+                                    </svg></span></div>
+                            <div (click)="this.selectRadio3($event)" class="ui button sh-i mw-100"><input class="hidden"
+                                    value="triangle" type="radio" name="shape" /><span style="pointer-events: none;"
+                                    class="fs-1rem"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                            cx="417.901" cy="152.619" rx="60" ry="60" />
+                                    </svg></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="container-color text-center m25 text-nowrap overflow-hidden">
+                            <div class="row">
+                                <div class="col-12 col-lg-6">
+                                <div class="color-button red d-inline-block"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                        cx="417.901" cy="152.619" rx="60" ry="60" />
+                                </svg></div>
+                                <div class="color-button orange d-inline-block"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                        cx="417.901" cy="152.619" rx="60" ry="60" />
+                                </svg></div>
+                                <div class="color-button yellow d-inline-block"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                        cx="417.901" cy="152.619" rx="60" ry="60" />
+                                </svg></div>
+                                <div class="color-button lime d-inline-block"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                            cx="417.901" cy="152.619" rx="60" ry="60" />
+                                    </svg></div>
+                                <div class="color-button green d-inline-block"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                        cx="417.901" cy="152.619" rx="60" ry="60" />
+                                </svg></div>
+                                <div class="color-button turquoise d-inline-block"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                        cx="417.901" cy="152.619" rx="60" ry="60" />
+                                </svg></div></div><div class="col-12 col-lg-6">
+                                <div class="color-button cyan d-inline-block"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                        cx="417.901" cy="152.619" rx="60" ry="60" />
+                                </svg></div>
+                                <div class="color-button royal-blue d-inline-block"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                        cx="417.901" cy="152.619" rx="60" ry="60" />
+                                </svg></div>
+                                <div class="color-button blue d-inline-block"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                        cx="417.901" cy="152.619" rx="60" ry="60" />
+                                </svg></div>
+                                <div class="color-button violet d-inline-block"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                        cx="417.901" cy="152.619" rx="60" ry="60" />
+                                </svg></div>
+                                <div class="color-button pink d-inline-block"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                        cx="417.901" cy="152.619" rx="60" ry="60" />
+                                </svg></div>
+                                <div class="color-button magenta d-inline-block"><svg class="w-100" viewBox="325.123 59.383 185.556 186.473"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <ellipse class="w-100" style="fill: rgb(80, 80, 80); stroke: rgb(80, 80, 80);"
+                                        cx="417.901" cy="152.619" rx="60" ry="60" />
+                                </svg></div></div>
+                            </div>
+                            <div>
+                                <input class="mw-100 w-75" type="range" (change)="this.changeSaturation($event)"
+                                    value="100" />
+                                <span class="w-25"><i class="tint icon fs-5"></i></span>
+                            </div>
+                            <div>
+                                <input class="mw-100 w-75" type="range" (change)="this.changeBrightness($event)"
+                                    value="70" />
+                                <span class="w-25"><i class="lightbulb icon fs-5"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="this.searchActive" class="w-50 m-auto">
+                <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" style="position: absolute; bottom:100px; width:50%;">
+                    <rect id="rect1" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" width="250" height="250"
+                        x="180" y="77" />
+                    <rect id="rect2" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" width="250" height="250"
+                        x="90" y="154" />
+                    <polygon id="poly1" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"
+                        points="180 77 430 77 340 154 90 154" />
+                    <polygon id="poly2" style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"
+                        points="340 154 340 404 430 327 430 77" />
+                </svg>
+            </div>
+        </div>
+        <div class="{{ this.searchActive ? 'col-8' : 'col-11'}} products" style="transition: width 1s;">
+            <div class="row">
+                <div class="col-6">
+                    <div class="d-flex align-items-center h-100" style="margin-left:10%;">
+                    <div class="ui pagination menu">
+                        <a class="active item">
+                          1
+                        </a>
+                        <div class="disabled item">
+                          ...
+                        </div>
+                        <a class="item">
+                          10
+                        </a>
+                        <a class="item">
+                          11
+                        </a>
+                        <a class="item">
+                          12
+                        </a>
+                      </div>
+                      </div>
+                </div>
+                <div class="col-6">
+                    <div class="setting" style="float: right; margin-right:10%;">
+                        <p class="setting-title">Items size</p>
+                        <div class="radio-controls align-items-center" style="background: #aaa;
+                        border-radius: 5px;
+                        justify-content: space-around;">
+                            <div class="cbs"><input class="hidden" name="num-col" type="radio"
+                                    value="4"><div class="icon-dim" (click)="this.selectRadio($event)"><i class="inverted th icon svgs-dim fs-2" style="line-height: 1;"></i></div><!--<svg (click)="this.selectRadio($event)" class="svgs-dim"
+                                    viewBox="102.87 74.431 101.228 100.783"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect class="icon-dim" x="103.634" y="75.015" width="100"
+                                        height="100" />
+                                    <rect x="155.462" y="127.13" width="40" height="40"
+                                        style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                        rx="15.108" ry="15.108" />
+                                    <rect x="155.462" y="83.13" width="40" height="40"
+                                        style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                        rx="15.108" ry="15.108" />
+                                    <rect x="110.806" y="127.13" width="40" height="40"
+                                        style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                        rx="15.108" ry="15.108" />
+                                    <rect x="110.806" y="83.13" width="40" height="40"
+                                        style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                        rx="15.108" ry="15.108" />
+                                </svg>--></div>
+                            <div class="cbs">
+                                <input class="hidden" name="num-col" type="radio" value="3" checked>
+                                <div class="icon-dim active-ic" (click)="this.selectRadio($event)"><i class="inverted th large icon svgs-dim fs-2"></i></div><!--<svg
+                                    (click)="this.selectRadio($event)" class="svgs-dim"
+                                    viewBox="102.87 74.431 101.228 100.783"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect class="icon-dim active-dim" height="100" width="100" x="103.634"
+                                        y="75.015"></rect>
+                                    <rect height="50" rx="9.108" ry="9.108"
+                                        style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                        width="30" x="165.462" y="83.13"></rect>
+                                    <rect height="30" rx="9.108" ry="9.108"
+                                        style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                        width="84" x="110.806" y="137.13"></rect>
+                                    <rect height="50" rx="9.108" ry="9.108"
+                                        style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                        width="50" x="110.806" y="83.13"></rect>
+                                </svg>-->
+                            </div>
+                            <div class="cbs"><input class="hidden" name="num-col" type="radio"
+                                    value="2"><div class="icon-dim"  (click)="this.selectRadio($event)"><i style="line-height: 1;" class="inverted window maximize outline icon svgs-dim fs-2"></i></div><!--<svg (click)="this.selectRadio($event)" class="svgs-dim"
+                                    viewBox="102.87 74.431 101.228 100.783"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <rect class="icon-dim" height="100" width="100" x="103.634" y="75.015">
+                                    </rect>
+                                    <rect height="80" rx="9.108" ry="9.108"
+                                        style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                        width="80" x="113.513" y="86.112"></rect><text dx="-28.75"
+                                        dy="-3.75"
+                                        style="fill: rgb(99, 99, 99); font-weight: 700; font-family: Arial, sans-serif; font-size: 72.1946px; line-height: 67.5113px; stroke-linecap: round; stroke-linejoin: round; stroke-width: 0px; white-space: pre;"
+                                        transform="matrix(0.710983, 0, 0, 0.710992, 165.511398, 155.224548)">L</text>
+                                </svg>--></div>
+                        </div></div>
+                </div>
+            </div>
+            <div *ngFor="let i of this.rowNum" class="row p-3">
+                <div *ngFor="let i of this.columnNum"
+                    class="{{ this.columnNum.length == 2 ? 'col-lg-6 col-md-6' : this.columnNum.length == 3 ? 'col-lg-4' : 'col-lg-3 col-md-6' }} col-12">
+                    <div>
+                        <div class="m-10 d-flex justify-content-center">
+                            <div class="ui card p-10-pc w-100 m-5-pc">
+                                <div class="ui placeholder mw-100">
+                                    <div class="content">
+                                        <div class="square image">
+                                        </div>
+                                    </div>
+                                    <div class="paragraph">
+                                        <div class="medium line"></div>
+                                        <div class="short line"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="background: #ddd">
+        <div class="{{this.searchActive ? 'col-4' : 'col-1'}}"></div>
+        <div class="{{this.searchActive ? 'col-8' : 'col-11'}}">
+            <div class="d-flex align-items-center h-100 justify-content-center">
+            <div class="ui pagination menu">
+                <a class="active item">
+                  1
+                </a>
+                <div class="disabled item">
+                  ...
+                </div>
+                <a class="item">
+                  10
+                </a>
+                <a class="item">
+                  11
+                </a>
+                <a class="item">
+                  12
+                </a>
+              </div>
+              </div>
+        </div>
+        </div>
+<!--
+    <div class="ui grid">
+        <div class="row h-100">
+            <div class="four wide column filters">
+                <div class="search-sort-fields">
+                    <svg viewBox="70.652 22.881 401.172 333.958" xmlns="http://www.w3.org/2000/svg">
+                        <path style="stroke: rgb(0, 0, 0); fill: rgb(235, 235, 235);"
+                            d="M 273.742 240.765 C 273.742 240.765 272.154 246.004 266.316 253.389 C 260.478 260.774 189.965 254.969 171.263 284.579 C 152.561 314.189 154.183 322.452 154.183 322.452 L 458.651 323.195 C 458.651 323.195 416.322 253.389 380.677 253.389 C 345.032 253.389 333.893 274.925 324.982 268.242 C 316.071 261.559 310.872 263.786 313.843 240.765 C 316.814 217.744 275.97 240.023 273.742 240.765 Z" />
+                        <path style="stroke: rgb(0, 0, 0); fill: rgb(235, 235, 235);"
+                            d="M 222.598 71.061 C 224.406 71.965 210.187 153.044 243.503 172.015 C 276.819 190.986 349.293 95.067 349.293 95.067 L 366.479 71.272 L 364.194 69.436 L 222.598 71.061 Z" />
+                        <path style="fill: rgb(235, 235, 235); stroke: rgb(0, 0, 0);"
+                            d="M 238.912 169.756 C 238.912 169.756 235.607 190.643 254.775 221.727 C 273.943 252.811 264.907 237.871 286.443 248.582 C 285.994 248.569 330.574 241.389 345.541 191.196 C 360.508 141.003 358.305 91.151 351.148 92.051" />
+                        <ellipse style="fill: rgb(99, 99, 99); stroke: rgb(0, 0, 0);" cx="324.598" cy="133.705"
+                            rx="32.598" ry="32.921" />
+                        <ellipse style="fill: rgb(216, 216, 216); stroke: rgb(144, 144, 144);" cx="324.439" cy="134.028"
+                            rx="27.758" ry="28.725" />
+                        <path style="stroke: rgb(0, 0, 0); fill: rgb(255, 254, 254);"
+                            d="M 308.783 140.16 C 308.783 140.16 323.63 98.202 339.767 140.16" />
+                        <ellipse style="fill: rgb(83, 83, 83); stroke: rgb(83, 83, 83);" cx="325.566" cy="139.515"
+                            rx="7.101" ry="5.164" />
+                        <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"
+                            d="M 284.254 147.261 C 284.254 147.261 273.926 168.562 281.672 177.599 C 289.418 186.636 288.127 191.155 288.127 191.155" />
+                        <path style="stroke: rgb(0, 0, 0); fill: rgb(235, 235, 235);"
+                            d="M 246.154 101.538 C 246.293 101.191 226.015 79.841 295.873 93.038 C 365.731 106.235 367.726 70.488 367.726 70.488" />
+                        <path style="stroke: rgb(0, 0, 0); fill: rgb(255, 254, 254);"
+                            d="M 249.302 139.574 C 249.302 139.574 264.149 97.616 280.286 139.574" />
+                        <ellipse style="fill: rgb(83, 83, 83); stroke: rgb(83, 83, 83);" cx="267.085" cy="139.869"
+                            rx="7.101" ry="5.164" />
+                        <rect x="321.048" y="166.626" width="5.164" height="9.683"
+                            style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" />
+                        <rect x="319.111" y="175.017" width="9.037" height="53.577"
+                            style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);" />
+                        <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"
+                            d="M 317.445 207.864 C 302.384 206.357 310.945 206.932 329.449 226.942 C 339.071 237.347 354.987 241.895 370.106 244.732 C 400.824 250.496 349.093 274.809 349.146 274.831 C 349.369 274.923 308.506 273.117 286.836 229.24 C 278.737 212.842 298.692 205.592 318.559 181.752 C 323.567 175.743 317.445 207.864 317.445 207.864 Z" />
+                        <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"
+                            d="M 319.233 197.821 C 289.132 222.218 292.863 226.046 314.966 249.951" />
+                        <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"
+                            d="M 319.33 208.763 C 309.741 224.517 307.959 221.078 327.445 242.366" />
+                        <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"
+                            d="M 363.006 242.15 C 359.788 230.096 362.06 227.379 361.715 227.357 C 361.416 227.338 371.203 207.356 378.378 208.961 C 382.338 209.847 376.829 217.068 376.742 228.594 C 376.721 231.421 374.071 241.684 380.011 250.902" />
+                        <path style="fill: rgb(216, 216, 216); stroke: rgb(0, 0, 0);"
+                            d="M 319.128 208.01 C 318.707 211.705 320.215 217.909 322.512 219.937" />
+                        <path style="stroke: rgb(0, 0, 0); fill: rgb(235, 235, 235);"
+                            d="M 367.562 70.689 C 367.562 70.689 356.309 67.978 339.986 61.023 C 302.119 44.889 236.968 22.186 221.726 73.916" />
+                        <path style="stroke: rgb(0, 0, 0); fill: rgb(235, 235, 235);"
+                            d="M 223.048 73.255 C 223.048 73.255 206.524 137.369 239.573 169.756" />
+                        <path style="stroke: rgb(0, 0, 0); fill: rgb(235, 235, 235);"
+                            d="M 348.458 274.697 C 348.458 274.697 406.382 304.402 397.471 322.968" />
+                    </svg>
+                    <div class="dimension-search">
+                        <div class="label-div">
+                            <svg class="w-50" viewBox="344.607 76.782 149.908 152.651"
+                                xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+                                <path
+                                    d="M 378.428 198.925 H 481.6 L 481.6 191.425 L 498.6 202.925 L 481.6 214.425 L 481.6 206.925 H 378.428 V 198.925 Z"
+                                    style="fill: rgb(216, 216, 216); stroke: rgb(216, 216, 216);"
+                                    transform="matrix(0.933602, -0.358312, 0.358312, 0.933602, -59.405994, 159.691986)"
+                                    bx:shape="arrow 378.428 191.425 120.172 23 8 17 0 1@13de922c" />
+                                <path
+                                    d="M 375.686 210.808 H 468.379 L 468.379 203.308 L 485.379 214.808 L 468.379 226.308 L 468.379 218.808 H 375.686 V 210.808 Z"
+                                    style="fill: rgb(216, 216, 216); stroke: rgb(216, 216, 216);"
+                                    transform="matrix(1, -0.000044, 0.000044, 1, -11.011448, 0.476172)"
+                                    bx:shape="arrow 375.686 203.308 109.693 23 8 17 0 1@d6d49da4" />
+                                <path
+                                    d="M 368.373 215.378 H 487.57 L 487.57 207.878 L 504.57 219.378 L 487.57 230.878 L 487.57 223.378 H 368.373 V 215.378 Z"
+                                    style="fill: rgb(216, 216, 216); stroke: rgb(216, 216, 216);"
+                                    transform="matrix(0, -1, 1, 0, 148.994522, 587.751404)"
+                                    bx:shape="arrow 368.373 207.878 136.197 23 8 17 0 1@0ece72e5" />
+                            </svg>
+                            <h3 class="dim-title">Dimensions</h3>
+                        </div>
+                        <div>
+                            <div class="input-field">
+                                <div>
+                                    <h5>Unit</h5>
+                                </div>
+                                <div>
+                                    <div class="ui large buttons">
+                                        <button class="ui button">Millimeters</button>
+                                        <div class="or"></div>
+                                        <button class="ui button">Inches</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-field">
+                                <label class="search-text">Width</label><input class="input-style" type="text"
+                                    name="width" />
+                            </div>
+                            <div class="input-field">
+                                <label class="search-text">Height</label><input class="input-style" type="text"
+                                    name="height" />
+                            </div>
+                            <div class="input-field">
+                                <label class="search-text">Depth</label><input class="input-style" type="text"
+                                    name="length" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="twelve wide column products">
+                <div class="ui grid">
+                    <div class="row">
+                        <div class="sixteen wide column">
+                            <div class="d-flex align-items-center space-around-content">
+                                <div>
+                                    <div class="five ui buttons">
+                                        <button class="ui button">Abstract</button>
+                                        <button class="ui button">Portraits</button>
+                                        <button class="ui button">Warranty</button>
+                                        <button class="ui button">Reviews</button>
+                                        <button class="ui button">Support</button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h5>Product1</h5>
+                                    <p>Description about product 1</p>
+                                    <button>See more</button>
+                                </div>
+
+
+                                <div class="setting">
+                                    <p class="setting-title">Items size</p>
+                                    <div class="radio-controls">
+                                        <div class="cbs"><input class="hidden" name="num-col" type="radio"
+                                                value="4"><svg (click)="this.selectRadio($event)" class="svgs-dim"
+                                                viewBox="102.87 74.431 101.228 100.783"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect class="icon-dim" x="103.634" y="75.015" width="100"
+                                                    height="100" />
+                                                <rect x="155.462" y="127.13" width="40" height="40"
+                                                    style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                                    rx="15.108" ry="15.108" />
+                                                <rect x="155.462" y="83.13" width="40" height="40"
+                                                    style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                                    rx="15.108" ry="15.108" />
+                                                <rect x="110.806" y="127.13" width="40" height="40"
+                                                    style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                                    rx="15.108" ry="15.108" />
+                                                <rect x="110.806" y="83.13" width="40" height="40"
+                                                    style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                                    rx="15.108" ry="15.108" />
+                                            </svg></div>
+                                        <div class="cbs">
+                                            <input class="hidden" name="num-col" type="radio" value="3" checked><svg
+                                                (click)="this.selectRadio($event)" class="svgs-dim"
+                                                viewBox="102.87 74.431 101.228 100.783"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect class="icon-dim active-dim" height="100" width="100" x="103.634"
+                                                    y="75.015"></rect>
+                                                <rect height="50" rx="9.108" ry="9.108"
+                                                    style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                                    width="30" x="165.462" y="83.13"></rect>
+                                                <rect height="30" rx="9.108" ry="9.108"
+                                                    style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                                    width="84" x="110.806" y="137.13"></rect>
+                                                <rect height="50" rx="9.108" ry="9.108"
+                                                    style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                                    width="50" x="110.806" y="83.13"></rect>
+                                            </svg>
+                                        </div>
+                                        <div class="cbs"><input class="hidden" name="num-col" type="radio"
+                                                value="2"><svg (click)="this.selectRadio($event)" class="svgs-dim"
+                                                viewBox="102.87 74.431 101.228 100.783"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect class="icon-dim" height="100" width="100" x="103.634" y="75.015">
+                                                </rect>
+                                                <rect height="80" rx="9.108" ry="9.108"
+                                                    style="fill: rgb(255, 255, 255); stroke: rgb(175, 175, 175);"
+                                                    width="80" x="113.513" y="86.112"></rect><text dx="-28.75"
+                                                    dy="-3.75"
+                                                    style="fill: rgb(99, 99, 99); font-weight: 700; font-family: Arial, sans-serif; font-size: 72.1946px; line-height: 67.5113px; stroke-linecap: round; stroke-linejoin: round; stroke-width: 0px; white-space: pre;"
+                                                    transform="matrix(0.710983, 0, 0, 0.710992, 165.511398, 155.224548)">L</text>
+                                            </svg></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="ui grid">
+                    <div class="row">
+                        <div class="sixteen wide column">
+                            <div
+                                class="ui {{ this.columnNum.length == 2 ? 'two' : this.columnNum.length == 3 ? 'three' : 'four' }} column stackable grid p-35">
+                                <div *ngFor="let i of this.placeholderElements" class="column">
+                                    <div class="m-10 d-flex justify-content-center">
+                                        <div class="ui card p-35">
+                                            <div class="ui placeholder">
+                                                <div class="content">
+                                                    <div class="square image">
+                                                    </div>
+                                                </div>
+                                                <div class="paragraph">
+                                                    <div class="medium line"></div>
+                                                    <div class="short line"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
